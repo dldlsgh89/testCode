@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<style>
+    div {width:120px;
+        height:120px;
+        border:1px solid gray;
+        margin-right:5px;
+        display:table;
+        float:left;}
+   
+    p { font-size:50px;
+        font-weight:bold;
+        text-align:center;
+        display:table-cell;
+        vertical-align:middle;}
+   
+    nav{clear:both;}
+   
+    #red{background:red;}
+    #orange{background:orange;}
+    #yellow{background:yellow;}
+    #green{background:green;}
+    #blue{background:blue;}
+    #navy{background:navy;}
+    #purple{background:purple;}
+</style>
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script>
+    var randomNum = function(toNum){ // toNum <-- 45 why:로또!
+        return Math.floor(Math.random()*toNum); // 45 -> 0~44
+    }
+ 
+    var lotto = function(toNum){
+        var arr = new Array(toNum);
+        for(var i=0; i<arr.lenght; i++){
+            arr[i] = i+1;
+        }
+        for(var j=0; j<100000; j++){
+            var ran = randomNum(toNum);
+            var temp = arr[0];
+            arr[0] = arr[ran];
+            arr[ran] = temp;
+        }
+        return arr.slice(0,7);
+    }
+   
+    $(document).ready(function(){
+        var timerOne;
+        var timerTwo;
+        var timerThree;
+        var timerFour;
+        var timerFive;
+        var timerSix;
+        var timerSeven;
+        $('#start').click(function(){
+            // 레드 숫자를 스타트
+            timerOne = setInterval(function(){
+                            $('#red_num').text(randomNum(45)+1);
+                        },
+                        20);
+            // 오렌지 숫자를 스타트
+            timerTwo = setInterval(function(){
+                            $('#orange_num').text(randomNum(45)+1);
+                        },
+                        20);
+            // 노란 숫자를 스타트
+            timerThree = setInterval(function(){
+                            $('#yellow_num').text(randomNum(45)+1);
+                        },
+                        20);
+            // 초록 숫자를 스타트
+            timerFour = setInterval(function(){
+                            $('#green_num').text(randomNum(45)+1);
+                        },
+                        20);
+            // 파란 숫자를 스타트
+            timerFive = setInterval(function(){
+                            $('#blue_num').text(randomNum(45)+1);
+                        },
+                        20);
+            // 남색 숫자를 스타트
+            timerSix = setInterval(function(){
+                            $('#navy_num').text(randomNum(45)+1);
+                        },
+                        20);
+            // 보라 숫자를 스타트
+            timerSeven = setInterval(function(){
+                            $('#purple_num').text(randomNum(45)+1);
+                        },
+                        20);
+           
+        });
+       
+        $('#stop').on('click',function(){
+           
+            var lottoNum = lotto(45);
+           
+            setTimeout(function(){
+                clearInterval(timerOne);
+                $('#red_num').text(lottoNum[0]);
+                },1);
+            setTimeout(function(){
+                clearInterval(timerTwo);
+                $('#orange_num').text(lottoNum[1]);
+                },500);
+            setTimeout(function(){
+                clearInterval(timerThree);
+                $('#yellow_num').text(lottoNum[2]);
+                },1000);
+            setTimeout(function(){
+                clearInterval(timerFour);
+                $('#green_num').text(lottoNum[3]);
+                },1500);
+            setTimeout(function(){
+                clearInterval(timerFive);
+                $('#blue_num').text(lottoNum[4]);
+                },2000);
+            setTimeout(function(){
+                clearInterval(timerSix);
+                $('#navy_num').text(lottoNum[5]);
+                },2500);
+            setTimeout(function(){
+                clearInterval(timerSeven);
+                $('#purple_num').text(lottoNum[6]);
+                },3000);
+        });
+    });
+</script>
+</head>
+<body>
+    <h1>lotto 번호 생성기 (ver 0.1)</h1>
+    <div id="red"><p id="red_num">첫번째 번호</p></div>
+    <div id="orange"><p id="orange_num">두번째 번호</p></div>
+    <div id="yellow"><p id="yellow_num">세번째 번호</p></div>
+    <div id="green"><p id="green_num">네번째 번호</p></div>
+    <div id="blue"><p id="blue_num">다섯번째 번호</p></div>
+    <div id="navy"><p id="navy_num">여섯번째 번호</p></div>
+    <div id="purple"><p id="purple_num">보너스 번호</p></div>
+    <nav>
+        <input type="button" value="start" id="start">
+        <input type="button" value="stop" id="stop">
+    </nav>
+</body>
+</html>
